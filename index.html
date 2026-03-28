@@ -1477,11 +1477,11 @@ body{
     }
     fetch('https://aios-n8n-webhook.yspmhc.easypanel.host/webhook/formulario_murilo',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(data),
+      mode:'no-cors'
     })
-    .then(function(res){
-      if(!res.ok)throw new Error('Erro '+res.status);
+    .then(function(){
       btnSubmit.classList.remove('loading');
       document.querySelector('.app').style.display='none';
       confirmEl.classList.add('active');
