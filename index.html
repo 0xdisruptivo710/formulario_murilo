@@ -1475,15 +1475,25 @@ body{
         data[pair[0]].push(pair[1]);
       }else data[pair[0]]=pair[1];
     }
-    console.log('AIOS Diagnóstico:',data);
-
-    setTimeout(function(){
+    fetch('https://aios-n8n-webhook.yspmhc.easypanel.host/webhook/formulario_murilo',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    })
+    .then(function(res){
+      if(!res.ok)throw new Error('Erro '+res.status);
       btnSubmit.classList.remove('loading');
       document.querySelector('.app').style.display='none';
       confirmEl.classList.add('active');
       localStorage.removeItem(KEY);
       window.scrollTo({top:0,behavior:'smooth'});
-    },2000);
+    })
+    .catch(function(err){
+      console.error('Erro ao enviar:',err);
+      btnSubmit.classList.remove('loading');
+      btnSubmit.disabled=false;
+      alert('Não foi possível enviar o formulário. Verifique sua conexão e tente novamente.');
+    });
   });
 
   // ══════════════════════════════
